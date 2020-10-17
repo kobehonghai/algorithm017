@@ -1,0 +1,14 @@
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root==null || root==p || root==q){
+            return root;
+        }
+
+        TreeNode left = lowestCommonAncestorTest(root.left, p, q);
+        TreeNode right= lowestCommonAncestorTest(root.right,p,q);
+
+        if (left != null && right != null) {
+            return root;
+        }
+
+        return left!=null?left:right;
+    }
