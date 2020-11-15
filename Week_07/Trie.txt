@@ -1,0 +1,74 @@
+public class Trie {
+
+    public static void main(String[] args) {
+        Trie trie=new Trie();
+        trie.insert("apple");
+        System.out.println(trie.search("appl"));
+        System.out.println(trie.startsWith("ap"));
+    }
+    private TrieNode root;
+
+    public Trie() {
+        root=new TrieNode();
+    }
+
+    public void insert(String word) {
+        TrieNode node=root;
+        char[] chars=word.toCharArray();
+        for (char a:chars) {
+            if (!node.contains(a)) {
+                node.put(a,new TrieNode());
+            }
+            node = node.get(a);
+        }
+        node.setEnd();
+    }
+
+    public boolean search(String word) {
+        TrieNode node=root;
+        char[] chars=word.toCharArray();
+        for (char a : chars) {
+            if (!node.contains(a)) {
+                return false;
+            }
+            node = node.get(a);
+        }
+        return node.isEnd;
+    }
+
+    public boolean startsWith(String prefix) {
+        TrieNode node=root;
+        char[] chars=prefix.toCharArray();
+        for (char a : chars) {
+            if (!node.contains(a)) {
+                return false;
+            }
+            node = node.get(a);
+        }
+        return true;
+    }
+
+    class TrieNode {
+        TrieNode[] nodes=new TrieNode[26];
+        private boolean isEnd;
+        public void put(char ch,TrieNode node) {
+            nodes[ch-'a']=node;
+        }
+
+        public boolean contains(char ch) {
+            return nodes[ch-'a']!=null;
+        }
+
+        public TrieNode get(char ch) {
+            return nodes[ch - 'a'];
+        }
+
+        public boolean isEnd() {
+            return isEnd;
+        }
+
+        public void setEnd() {
+            isEnd = true;
+        }
+    }
+}
